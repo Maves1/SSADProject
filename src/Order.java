@@ -37,12 +37,14 @@ public class Order {
             check+=item.getPrice()*quantity;
         }
     }
-    public void printOrder(){
 
-    }
     public void removeItem(Item item) {
         if (orderStatus == Status.PickingItems) {
             items.remove(item);
         }
+    }
+
+    public Map<Item, Integer> getItems() {
+        return items;
     }
 }

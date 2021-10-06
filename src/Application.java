@@ -56,35 +56,35 @@ public class Application {
     }
 
     private void showBars() {
-        int counter = 0;
+        int counter = 1;
         for (GeneralRestaurant s : bars) {
             System.out.println(counter + "- " + s.getName());
         }
     }
 
     private void showCafes() {
-        int counter = 0;
+        int counter = 1;
         for (GeneralRestaurant s : cafes) {
             System.out.println(counter + "- " + s.getName());
         }
     }
 
     private void showRestaurants() {
-        int counter = 0;
+        int counter = 1;
         for (GeneralRestaurant s : restaurants) {
             System.out.println(counter + "- " + s.getName());
         }
     }
 
-    public void selectType(GeneralRestaurant.Type type) {
+    private void selectType(int type) {
         switch (type) {
-            case Bar:
+            case 1:
                 chosenType = GeneralRestaurant.Type.Bar;
                 break;
-            case Cafe:
+            case 2:
                 chosenType = GeneralRestaurant.Type.Cafe;
                 break;
-            case Restaurant:
+            case 3:
                 chosenType = GeneralRestaurant.Type.Restaurant;
                 break;
             default:
@@ -93,11 +93,11 @@ public class Application {
         }
     }
 
-    public void unselectType() {
+    private void unselectType() {
         chosenType = null;
     }
 
-    public void showChosenTypeRestaurants() {
+    private void showChosenTypeRestaurants() {
         switch (chosenType) {
             case Bar:
                 showBars();
@@ -114,20 +114,20 @@ public class Application {
         }
     }
 
-    public void selectRestaurant(String chosenRes) {
-        for (GeneralRestaurant restaurant : generalRestaurants) {
-            if (restaurant.name == chosenRes) {
-                chosenRestaurant = restaurant;
-                break;
-            }
+    private void selectRestaurant(int chosenRes) {
+        switch (chosenType){
+            case Bar -> chosenRestaurant=bars.get(chosenRes-1);
+            case Restaurant -> chosenRestaurant=restaurants.get(chosenRes-1);
+            case Cafe -> chosenRestaurant=cafes.get(chosenRes-1);
         }
+
     }
 
-    public void unselectRestaurant() {
+    private void unselectRestaurant() {
         chosenRestaurant = null;
     }
 
-    public void showMenu(Map<String, List<Item>> menu) {
+    private void showMenu(Map<String, List<Item>> menu) {
         Set set = menu.entrySet();
         Iterator itr = set.iterator();
         while (itr.hasNext()) {
@@ -135,37 +135,70 @@ public class Application {
             System.out.println(entry.getKey() + ":");
             List<Item> list = (List<Item>) entry.getValue();
             for (Item item : list) {
-                System.out.println(" -" + item);
+                System.out.println(" -" + item.getName());
             }
         }
 
     }
 
-    public void makeOrder() {
-        System.out.println("Welcome to restaurant " + chosenRestaurant.getName());
+    private void makeOrder() {
+        System.out.println("Welcome to " + chosenRestaurant.getName());
         System.out.println("Choose from the menu the category, item, and quantity.\n write finished when you are done");
         showMenu(chosenRestaurant.menu.getMenu());
         Order newOrder = new Order();
         Scanner scanner = new Scanner(System.in);
         String ItemName = "start";
-        while (!ItemName.equals("finished")) {
-            String category = scanner.next();
-            ItemName = scanner.next();
-            int quantity = scanner.nextInt();
+        String input="start";
+        while (true) {
+            input=scanner.nextLine();
+            if(input.equals("finished")){
+                break;
+            }
+            String[] parts=input.split(" ");
+            String category =parts[0];
+            ItemName = parts[1];
+            int quantity = Integer.parseInt(parts[2]);
             Item newItem = chosenRestaurant.menu.getItem(category, ItemName);
             newOrder.addItem(newItem, quantity);
         }
         //confirming the order
         System.out.println("Your order is:");
-        //printing the order
+        System.out.println("Item      Quantity");
+        for (Map.Entry<Item, Integer> entry : newOrder.getItems().entrySet()) {
+            Item currentItem = entry.getKey();
+            int quantity = entry.getValue();
+            System.out.println(currentItem.getName()+"       "+quantity);
+
+        }
+        System.out.println("Your check= " + newOrder.getCheck());
         System.out.println("Confirm Y/N");
         String confirmation = scanner.next();
         if (confirmation.equals("Y")) {
-            System.out.println("Your check= " + newOrder.getCheck());
+            scanner = new Scanner(System.in);
+            System.out.println("Please enter your address:");
+            String address=scanner.nextLine();
+            System.out.println("Order confirmed and will be delivered to "+address);
+            System.out.println("Have a nice day!");
         } else {
             newOrder = null;
             System.out.println("The order was canceled, Have a nice day!");
         }
 
     }
+
+    public void Start(){
+        System.out.println("Welcome to our food ordering app!");
+        System.out.println("Here is a list of types of places where you can order from, choose the number that you want:");
+        System.out.println("1-Bars\n2-Cafes\n3-Restaurants");
+        Scanner scanner = new Scanner(System.in);
+        int typeAnswer = scanner.nextInt();
+        selectType(typeAnswer);
+        System.out.println("Choose the number of the place from the list");
+        showChosenTypeRestaurants();
+        scanner = new Scanner(System.in);
+        int chosenRestaurantName=scanner.nextInt();
+        selectRestaurant(chosenRestaurantName);
+        makeOrder();
+    }
+
 }
