@@ -1,51 +1,36 @@
-import com.sun.corba.se.impl.encoding.TypeCodeOutputStream;
-import com.sun.org.apache.xerces.internal.impl.xpath.XPath;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
 enum Types{
     Bar,
     Cafe,
-    Fast_food,
-    Sea_food
-}
-class Restaurant{
-    String name;
-    Restaurant(String s){
-        name=s;
-    }
+    normalRestaurant
 }
 
 public class Application {
     private ArrayList<String> restaurantsTypes=new ArrayList<>();
     private ArrayList<String> bars=new ArrayList<>();
     private ArrayList<String> cafes=new ArrayList<>();
-    private ArrayList<String> fastFoodRes=new ArrayList<>();
-    private ArrayList<String> seaFoodRes=new ArrayList<>();
+    private ArrayList<String> normalRestaurants =new ArrayList<>();
     private ArrayList<Restaurant> restaurants=new ArrayList<>();
     public Types chosenType;
-    private void addResTypes(){
-        restaurantsTypes.add("Bar");
-        restaurantsTypes.add("Cafe");
-        restaurantsTypes.add("Fast food");
-        restaurantsTypes.add("Sea food");
-    }
+    public Restaurant chosenRestaurant;
 
     private void addBars(){
         bars.add("Bar 108");
-        restaurants.add(new Restaurant("Bar 108"));
+        Menu m = new Menu();// temporary thing
+        restaurants.add(new Restaurant("Bar 108","","",m));// add some info for the bar
     }
     private void addCafes(){
         cafes.add("Starbucks");
-
+        Menu m = new Menu();// temporary thing
+        restaurants.add(new Restaurant("Starbucks","","",m));
     }
-    private void addFastFoodRes(){
-        fastFoodRes.add("Mcdonalds");
+    private void addNormalRes(){
+        normalRestaurants.add("Mcdonalds");
+        Menu m = new Menu();// temporary thing
+        restaurants.add(new Restaurant("Mcdonalds","","",m));
     }
-    private void addSeaFoodRes(){
-        seaFoodRes.add("A sea food restaurant");
-    }
-
 
     private void showBars(){
         int counter=0;
@@ -61,24 +46,15 @@ public class Application {
             System.out.println(counter+"- "+s);
         }
     }
-    private void showFastFoodRes(){
+    private void showNormalRes(){
         int counter=0;
-        for(String s:fastFoodRes)
+        for(String s: normalRestaurants)
         {
             System.out.println(counter+"- "+s);
         }
     }
-    private void showSeaFoodRes(){
-        int counter=0;
-        for(String s:seaFoodRes)
-        {
-            System.out.println(counter+"- "+s);
-        }
-    }
-
 
     public Application(){
-        addResTypes();
 
     }
 
@@ -100,11 +76,8 @@ public class Application {
             case Cafe:
                 chosenType= Types.Cafe;
                 break;
-            case Fast_food:
-                chosenType=Types.Fast_food;
-                break;
-            case Sea_food:
-                chosenType=Types.Sea_food;
+            case normalRestaurant:
+                chosenType=Types.normalRestaurant;
                 break;
             default:
                 System.out.println("Please choose one of the given restaurant types");
@@ -124,11 +97,8 @@ public class Application {
             case Cafe:
                 showCafes();
                 break;
-            case Fast_food:
-                showFastFoodRes();
-                break;
-            case Sea_food:
-                showSeaFoodRes();
+            case normalRestaurant:
+                showNormalRes();
                 break;
             default:
                 System.out.println("Please choose one of the given restaurants");
@@ -136,6 +106,40 @@ public class Application {
         }
     }
     public void selectRes(String chosenRes){
+        for(Restaurant restaurant:restaurants)
+        {
+            if(restaurant.name==chosenRes) {
+                chosenRestaurant = restaurant;
+                break;
+            }
+        }
+    }
+    public void unselectRes(){
+        chosenRestaurant=null;
+    }
+    public void showMenu(Map<String, List<Item>> menu)
+    {
+        Set set=menu.entrySet();
+        Iterator itr=set.iterator();
+        while (itr.hasNext())
+        {
+            Map.Entry entry=(Map.Entry)itr.next();
+            System.out.println(entry.getKey()+":");
+            List<Item> list= (List<Item>) entry.getValue();
+            for(Item item:list)
+            {
+                System.out.println(" -"+item);
+            }
+        }
+
+    }
+    public void makeOrder(){
+        System.out.println("Welcome to restaurant "+chosenRestaurant.name);
+        System.out.println("Choose from the menu and write finished when you are done");
+        showMenu(chosenRestaurant.menu.getMenu());
+        Order newOrder=new Order();
+        Scanner scanner=new Scanner(System.in);
+        String ItemName=scanner.next();
 
     }
 }
