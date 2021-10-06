@@ -38,4 +38,16 @@ public class Menu {
     public Map<String, List<Item>> getMenu() {
         return menu;
     }
+
+    public Item getItem(String category,String itemName) {
+        List<Item> items= menu.get(category);
+        for(Item i:items)
+        {
+            if(itemName.equals(i.getName()))
+            {
+                return i;
+            }
+        }
+        return null;
+    }
 }
