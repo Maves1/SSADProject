@@ -12,10 +12,15 @@ public class Order {
 
     private Map<Item, Integer> items;
     private Status orderStatus;
+    private double check;
 
     public Order() {
         items = new HashMap<>();
         orderStatus = Status.PickingItems;
+    }
+
+    public double getCheck() {
+        return check;
     }
 
     public Status getOrderStatus() {
@@ -29,9 +34,12 @@ public class Order {
     public void addItem(Item item, int quantity) {
         if (orderStatus == Status.PickingItems) {
             items.put(item, quantity);
+            check+=item.getPrice()*quantity;
         }
     }
+    public void printOrder(){
 
+    }
     public void removeItem(Item item) {
         if (orderStatus == Status.PickingItems) {
             items.remove(item);
