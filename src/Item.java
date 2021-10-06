@@ -5,4 +5,12 @@ public class Item {
         this.name=n;
         this.price=price;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
 }
