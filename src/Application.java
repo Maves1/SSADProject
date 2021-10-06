@@ -1,30 +1,54 @@
 import java.util.*;
 
 public class Application {
-    private ArrayList<String> restaurantsTypes = new ArrayList<>();
-    private ArrayList<String> bars = new ArrayList<>();
-    private ArrayList<String> cafes = new ArrayList<>();
-    private ArrayList<String> normalRestaurants = new ArrayList<>();
-    private ArrayList<Restaurant> restaurants = new ArrayList<>();
+    private ArrayList<String> restaurantsTypes;
+    private ArrayList<String> bars;
+    private ArrayList<String> cafes;
+    private ArrayList<String> restaurants;
+    private ArrayList<Restaurant> generalRestaurant;
+    private String address;
     public GeneralRestaurant.Type chosenType;
     public Restaurant chosenRestaurant;
+    public Application() {
+        restaurantsTypes = new ArrayList<>();
+        bars = new ArrayList<>();
+        cafes = new ArrayList<>();
+        generalRestaurant = new ArrayList<>();
+        restaurants=new ArrayList<>();
+        addBars();
+        addCafes();
+        addRestaurants();
 
+    }
     private void addBars() {
         bars.add("Bar 108");
-        Menu m = new Menu();// temporary thing
-        restaurants.add(new Restaurant("Bar 108", "", "", m));// add some info for the bar
+        Menu barMenu = new Menu();
+        barMenu.addCategory("Drinks");
+        barMenu.addItem("Drinks", new Item("Beer", 150.0));
+        barMenu.addItem("Drinks", new Item("Otvertka", 999.0));
+        barMenu.addCategory("Food");
+        barMenu.addItem("Food", new Item("Burger", 300.0));
+        generalRestaurant.add(new Restaurant("Bar 108", "", "", barMenu));// add some info for the bar
     }
 
     private void addCafes() {
         cafes.add("Starbucks");
-        Menu m = new Menu();// temporary thing
-        restaurants.add(new Restaurant("Starbucks", "", "", m));
+        Menu cafeMenu = new Menu();
+        cafeMenu.addCategory("Drinks");
+        cafeMenu.addItem("Drinks", new Item("coffee", 100.0));
+        cafeMenu.addItem("Drinks", new Item("tea", 50.0));
+        generalRestaurant.add(new Restaurant("Starbucks", "", "", cafeMenu));
     }
 
-    private void addNormalRes() {
-        normalRestaurants.add("Mcdonalds");
-        Menu m = new Menu();// temporary thing
-        restaurants.add(new Restaurant("Mcdonalds", "", "", m));
+    private void addRestaurants() {
+        restaurants.add("Mcdonalds");
+        Menu restaurantMenu = new Menu();
+        restaurantMenu.addCategory("Drinks");
+        restaurantMenu.addItem("Drinks", new Item("Pepsi", 50.0));
+        restaurantMenu.addItem("Drinks", new Item("fanta", 50.0));
+        restaurantMenu.addCategory("Food");
+        restaurantMenu.addItem("Food", new Item("Burger", 300.0));
+        generalRestaurant.add(new Restaurant("Mcdonalds", "", "", restaurantMenu));
     }
 
     private void showBars() {
@@ -41,16 +65,14 @@ public class Application {
         }
     }
 
-    private void showNormalRes() {
+    private void showRestaurants() {
         int counter = 0;
-        for (String s : normalRestaurants) {
+        for (String s : restaurants) {
             System.out.println(counter + "- " + s);
         }
     }
 
-    public Application() {
 
-    }
 
 
     public void showTypes() {
@@ -82,7 +104,7 @@ public class Application {
         chosenType = null;
     }
 
-    public void showRestaurants() {
+    public void showGeneralRestaurants() {
         switch (chosenType) {
             case Bar:
                 showBars();
@@ -91,7 +113,7 @@ public class Application {
                 showCafes();
                 break;
             case Restaurant:
-                showNormalRes();
+                showRestaurants();
                 break;
             default:
                 System.out.println("Please choose one of the given restaurants");
@@ -100,7 +122,7 @@ public class Application {
     }
 
     public void selectRes(String chosenRes) {
-        for (Restaurant restaurant : restaurants) {
+        for (Restaurant restaurant : generalRestaurant) {
             if (restaurant.name == chosenRes) {
                 chosenRestaurant = restaurant;
                 break;
@@ -128,11 +150,33 @@ public class Application {
 
     public void makeOrder() {
         System.out.println("Welcome to restaurant " + chosenRestaurant.name);
-        System.out.println("Choose from the menu and write finished when you are done");
+        System.out.println("Choose from the menu the category, item, and quantity.\n write finished when you are done");
         showMenu(chosenRestaurant.menu.getMenu());
         Order newOrder = new Order();
         Scanner scanner = new Scanner(System.in);
-        String ItemName = scanner.next();
+        String ItemName="start";
+        while (!ItemName.equals("finished"))
+        {
+            String category = scanner.next();
+            ItemName = scanner.next();
+            int quantity=scanner.nextInt();
+            Item newItem=chosenRestaurant.menu.getItem(category,ItemName);
+            newOrder.addItem(newItem,quantity);
+        }
+        //confirming the order
+        System.out.println("Your order is:");
+        //printing the order
+        System.out.println("Confirm Y/N");
+        String confirmation=scanner.next();
+        if(confirmation.equals("Y"))
+        {
+            System.out.println("Your check= "+newOrder.getCheck());
+        }
+        else
+        {
+            newOrder=null;
+            System.out.println("The order was canceled, Have a nice day!");
+        }
         
     }
 }
