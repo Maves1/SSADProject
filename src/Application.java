@@ -1,87 +1,80 @@
 import java.util.*;
 
 public class Application {
-    private ArrayList<String> restaurantsTypes;
-    private ArrayList<String> bars;
-    private ArrayList<String> cafes;
-    private ArrayList<String> restaurants;
-    private ArrayList<Restaurant> generalRestaurant;
-    private String address;
+    RestaurantFactory restaurantFactory;
+
+    private ArrayList<GeneralRestaurant> bars;
+    private ArrayList<GeneralRestaurant> cafes;
+    private ArrayList<GeneralRestaurant> restaurants;
+    private ArrayList<GeneralRestaurant> generalRestaurants;
     public GeneralRestaurant.Type chosenType;
-    public Restaurant chosenRestaurant;
+    public GeneralRestaurant chosenRestaurant;
+
     public Application() {
-        restaurantsTypes = new ArrayList<>();
+        restaurantFactory = new RestaurantFactory();
         bars = new ArrayList<>();
         cafes = new ArrayList<>();
-        generalRestaurant = new ArrayList<>();
-        restaurants=new ArrayList<>();
-        addBars();
-        addCafes();
-        addRestaurants();
-
+        generalRestaurants = new ArrayList<>();
+        restaurants = new ArrayList<>();
+        initializeAllRestaurants();
     }
-    private void addBars() {
-        bars.add("Bar 108");
+
+    private void initializeAllRestaurants() {
+
         Menu barMenu = new Menu();
         barMenu.addCategory("Drinks");
         barMenu.addItem("Drinks", new Item("Beer", 150.0));
         barMenu.addItem("Drinks", new Item("Otvertka", 999.0));
         barMenu.addCategory("Food");
         barMenu.addItem("Food", new Item("Burger", 300.0));
-        generalRestaurant.add(new Restaurant("Bar 108", "", "", barMenu));// add some info for the bar
-    }
 
-    private void addCafes() {
-        cafes.add("Starbucks");
+        GeneralRestaurant bar = restaurantFactory.createRestaurant(GeneralRestaurant.Type.Bar, barMenu,
+                "Bar 108", "Sportivnaya", "5536");
+        generalRestaurants.add(bar);
+        bars.add(bar);
+
         Menu cafeMenu = new Menu();
         cafeMenu.addCategory("Drinks");
         cafeMenu.addItem("Drinks", new Item("coffee", 100.0));
         cafeMenu.addItem("Drinks", new Item("tea", 50.0));
-        generalRestaurant.add(new Restaurant("Starbucks", "", "", cafeMenu));
-    }
+        GeneralRestaurant cafe = restaurantFactory.createRestaurant(GeneralRestaurant.Type.Cafe, cafeMenu,
+                "Starbucks", "Kazan", "5536");
+        generalRestaurants.add(cafe);
+        cafes.add(cafe);
 
-    private void addRestaurants() {
-        restaurants.add("Mcdonalds");
         Menu restaurantMenu = new Menu();
         restaurantMenu.addCategory("Drinks");
         restaurantMenu.addItem("Drinks", new Item("Pepsi", 50.0));
-        restaurantMenu.addItem("Drinks", new Item("fanta", 50.0));
+        restaurantMenu.addItem("Drinks", new Item("Fanta", 50.0));
         restaurantMenu.addCategory("Food");
         restaurantMenu.addItem("Food", new Item("Burger", 300.0));
-        generalRestaurant.add(new Restaurant("Mcdonalds", "", "", restaurantMenu));
+        GeneralRestaurant restaurant = restaurantFactory.createRestaurant(GeneralRestaurant.Type.Restaurant,
+                restaurantMenu, "McDonald's", "Kazan", "5536");
+        generalRestaurants.add(restaurant);
+        restaurants.add(restaurant);
+
     }
 
     private void showBars() {
         int counter = 0;
-        for (String s : bars) {
-            System.out.println(counter + "- " + s);
+        for (GeneralRestaurant s : bars) {
+            System.out.println(counter + "- " + s.getName());
         }
     }
 
     private void showCafes() {
         int counter = 0;
-        for (String s : cafes) {
-            System.out.println(counter + "- " + s);
+        for (GeneralRestaurant s : cafes) {
+            System.out.println(counter + "- " + s.getName());
         }
     }
 
     private void showRestaurants() {
         int counter = 0;
-        for (String s : restaurants) {
-            System.out.println(counter + "- " + s);
+        for (GeneralRestaurant s : restaurants) {
+            System.out.println(counter + "- " + s.getName());
         }
     }
-
-
-
-
-    public void showTypes() {
-        int counter = 0;
-        for (String s : restaurantsTypes) {
-            System.out.println(counter + "- " + s);
-        }
-    }
-
 
     public void selectType(GeneralRestaurant.Type type) {
         switch (type) {
@@ -104,7 +97,7 @@ public class Application {
         chosenType = null;
     }
 
-    public void showGeneralRestaurants() {
+    public void showChosenTypeRestaurants() {
         switch (chosenType) {
             case Bar:
                 showBars();
@@ -121,8 +114,8 @@ public class Application {
         }
     }
 
-    public void selectRes(String chosenRes) {
-        for (Restaurant restaurant : generalRestaurant) {
+    public void selectRestaurant(String chosenRes) {
+        for (GeneralRestaurant restaurant : generalRestaurants) {
             if (restaurant.name == chosenRes) {
                 chosenRestaurant = restaurant;
                 break;
@@ -130,7 +123,7 @@ public class Application {
         }
     }
 
-    public void unselectRes() {
+    public void unselectRestaurant() {
         chosenRestaurant = null;
     }
 
@@ -149,34 +142,30 @@ public class Application {
     }
 
     public void makeOrder() {
-        System.out.println("Welcome to restaurant " + chosenRestaurant.name);
+        System.out.println("Welcome to restaurant " + chosenRestaurant.getName());
         System.out.println("Choose from the menu the category, item, and quantity.\n write finished when you are done");
         showMenu(chosenRestaurant.menu.getMenu());
         Order newOrder = new Order();
         Scanner scanner = new Scanner(System.in);
-        String ItemName="start";
-        while (!ItemName.equals("finished"))
-        {
+        String ItemName = "start";
+        while (!ItemName.equals("finished")) {
             String category = scanner.next();
             ItemName = scanner.next();
-            int quantity=scanner.nextInt();
-            Item newItem=chosenRestaurant.menu.getItem(category,ItemName);
-            newOrder.addItem(newItem,quantity);
+            int quantity = scanner.nextInt();
+            Item newItem = chosenRestaurant.menu.getItem(category, ItemName);
+            newOrder.addItem(newItem, quantity);
         }
         //confirming the order
         System.out.println("Your order is:");
         //printing the order
         System.out.println("Confirm Y/N");
-        String confirmation=scanner.next();
-        if(confirmation.equals("Y"))
-        {
-            System.out.println("Your check= "+newOrder.getCheck());
-        }
-        else
-        {
-            newOrder=null;
+        String confirmation = scanner.next();
+        if (confirmation.equals("Y")) {
+            System.out.println("Your check= " + newOrder.getCheck());
+        } else {
+            newOrder = null;
             System.out.println("The order was canceled, Have a nice day!");
         }
-        
+
     }
 }
