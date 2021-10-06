@@ -5,4 +5,13 @@ public class Bar extends GeneralRestaurant {
         this.type = Type.Bar;
     }
 
+    @Override
+    public boolean receiveOrder(Order order) {
+        if (Platform.checkIfLegal()) {
+            super.receiveOrder(order);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

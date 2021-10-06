@@ -30,9 +30,10 @@ public abstract class GeneralRestaurant {
         return menu;
     }
 
-    public void receiveOrder(Order order) {
+    public boolean receiveOrder(Order order) {
         order.setOrderStatus(Order.Status.Cooking);
         currentOrders.add(order);
+        return true;
     }
 
     public void changeOrderStatus(Order order, Order.Status newStatus) {
