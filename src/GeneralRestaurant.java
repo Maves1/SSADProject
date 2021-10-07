@@ -1,10 +1,12 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class GeneralRestaurant {
     enum Type {
         Restaurant,
         Bar,
-        Cafe
+        Cafe,
+        General
     }
 
     protected Type type;
@@ -19,6 +21,7 @@ public abstract class GeneralRestaurant {
         this.address = address;
         this.bankDetails = bankDetails;
         this.menu = menu;
+        currentOrders = new ArrayList<>();
     }
 
 
@@ -30,9 +33,11 @@ public abstract class GeneralRestaurant {
         return menu;
     }
 
-    public void receiveOrder(Order order) {
+    public boolean receiveOrder(Order order) {
         order.setOrderStatus(Order.Status.Cooking);
         currentOrders.add(order);
+
+        return true;
     }
 
     public void changeOrderStatus(Order order, Order.Status newStatus) {

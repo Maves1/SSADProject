@@ -5,4 +5,14 @@ public class Bar extends GeneralRestaurant {
         this.type = Type.Bar;
     }
 
+    @Override
+    public boolean receiveOrder(Order order) {
+        if (Application.checkIfAdult()) {
+            super.receiveOrder(order);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

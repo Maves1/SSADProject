@@ -28,7 +28,7 @@ public class Menu {
     }
 
     public boolean removeItem(String category, Item item) {
-        if (menu.containsKey(category)) {
+        if (menu.containsKey(category) && menu.get(category).contains(item)) {
             return menu.get(category).remove(item);
         } else {
             return false;
@@ -39,12 +39,10 @@ public class Menu {
         return menu;
     }
 
-    public Item getItem(String category,String itemName) {
-        List<Item> items= menu.get(category);
-        for(Item i:items)
-        {
-            if(itemName.equals(i.getName()))
-            {
+    public Item getItem(String category, String itemName) {
+        List<Item> items = menu.get(category);
+        for (Item i : items) {
+            if (itemName.equals(i.getName())) {
                 return i;
             }
         }
