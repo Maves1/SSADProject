@@ -156,6 +156,25 @@ public class Application {
         if (confirmation.equals("Y") && chosenRestaurant.receiveOrder(newOrder)) {
             System.out.println("Please enter your address:");
             String address = scanner.nextLine();
+            System.out.println("Would you like to get the check via email? SMS? Telegram? (Y/N) (ex: YNY)");
+            String notificationOptions = scanner.nextLine();
+            int mask=0;
+            for(int i=0;i<3;i++){
+                if(notificationOptions.charAt(i)== 'Y'){
+                    mask+= (1<<i);
+                }
+            }
+            ///new stuff
+            System.out.println("Please enter your email, or a #(in case you don't want to use it) in the next line");
+            String email = scanner.nextLine();
+            System.out.println("Please enter your phone number, or a #(in case you don't want to use it) in the next line");
+            String phone = scanner.nextLine();
+            System.out.println("Please enter your telegram alias, or a #(in case you don't want to use it) in the next line");
+            String telegramAlias = scanner.nextLine();
+            Notifier notifier = new Notifier(email, phone, telegramAlias);
+            NotificationDecorator multiplePlatformsNotifications = new NotificationDecorator(mask, notifier);
+            multiplePlatformsNotifications.sendCheck();
+            ///still testing
             System.out.println("Order confirmed and will be delivered to " + address);
             System.out.println("Have a nice day!");
         } else {
