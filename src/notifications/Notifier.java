@@ -1,8 +1,10 @@
+package notifications;
+
 public class Notifier implements Notification{
     public String email;
     public String telegramAlias;
     public String phoneNumber;
-    Notifier(String email,  String phoneNumber, String telegramAlias){
+    public Notifier(String email, String phoneNumber, String telegramAlias){
         super();
         this.email = email;
         this.telegramAlias = telegramAlias;

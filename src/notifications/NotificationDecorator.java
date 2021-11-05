@@ -1,9 +1,11 @@
+package notifications;
+
 public class NotificationDecorator implements Notification {
 
     private Notification wrappee,dynamicWrappee;
     protected int mask;
 
-    NotificationDecorator(int mask, Notifier notifier){
+    public NotificationDecorator(int mask, Notifier notifier){
         this.mask = mask;
         wrappee = new Notifier(notifier);
     }

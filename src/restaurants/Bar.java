@@ -1,3 +1,5 @@
+package restaurants;
+
 public class Bar extends GeneralRestaurant {
 
     public Bar(String name, String address, String bankDetails, Menu menu) {

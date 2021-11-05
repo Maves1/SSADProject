@@ -1,3 +1,5 @@
+package notifications;
+
 public class TelegramNotifier extends NotificationDecorator{
     String telegramAlias;
    TelegramNotifier(Notifier notifier) {

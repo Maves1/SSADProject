@@ -1,3 +1,5 @@
+package restaurants;
+
 public class RestaurantFactory {
     public GeneralRestaurant createRestaurant(
             GeneralRestaurant.Type type,

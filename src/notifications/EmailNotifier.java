@@ -1,3 +1,5 @@
+package notifications;
+
 public class EmailNotifier extends NotificationDecorator{
     public String email;
     EmailNotifier(Notifier notifier){

@@ -1,3 +1,9 @@
+import notifications.NotificationDecorator;
+import notifications.Notifier;
+import restaurants.GeneralRestaurant;
+import restaurants.Item;
+import restaurants.Order;
+
 import java.util.*;
 
 /*
@@ -123,7 +129,7 @@ public class Application {
     private void makeOrder() {
         System.out.println("Welcome to " + chosenRestaurant.getName());
         System.out.println("Write the category, item, and quantity.\n write finished when you are done");
-        showMenu(chosenRestaurant.menu.getMenu());
+        showMenu(chosenRestaurant.getMenu().getMenu());
         Order newOrder = new Order();
         String itemName = "start";
         String input = "start";
@@ -137,12 +143,12 @@ public class Application {
             String category = parts[0];
             itemName = parts[1];
             int quantity = Integer.parseInt(parts[2]);
-            Item newItem = chosenRestaurant.menu.getItem(category, itemName);
+            Item newItem = chosenRestaurant.getMenu().getItem(category, itemName);
             newOrder.addItem(newItem, quantity);
         }
         //confirming the order
         System.out.println("Your order is:");
-        System.out.println("Item      Quantity");
+        System.out.println("restaurants.Item      Quantity");
         for (Map.Entry<Item, Integer> entry : newOrder.getItems().entrySet()) {
             Item currentItem = entry.getKey();
             int quantity = entry.getValue();
@@ -175,7 +181,7 @@ public class Application {
             NotificationDecorator multiplePlatformsNotifications = new NotificationDecorator(mask, notifier);
             multiplePlatformsNotifications.sendCheck();
             ///still testing
-            System.out.println("Order confirmed and will be delivered to " + address);
+            System.out.println("restaurants.Order confirmed and will be delivered to " + address);
             System.out.println("Have a nice day!");
         } else {
             newOrder = null;

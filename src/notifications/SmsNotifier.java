@@ -1,3 +1,5 @@
+package notifications;
+
 public class SmsNotifier extends NotificationDecorator{
 
     String phoneNumber;

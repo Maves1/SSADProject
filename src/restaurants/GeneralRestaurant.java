@@ -1,8 +1,10 @@
+package restaurants;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class GeneralRestaurant {
-    enum Type {
+    public enum Type {
         Restaurant,
         Bar,
         Cafe,
@@ -32,6 +34,8 @@ public abstract class GeneralRestaurant {
     public Menu getMenu() {
         return menu;
     }
+
+    public Type getType() { return type; }
 
     public boolean receiveOrder(Order order) {
         order.setOrderStatus(Order.Status.Cooking);

@@ -1,3 +1,8 @@
+import restaurants.GeneralRestaurant;
+import restaurants.Item;
+import restaurants.Menu;
+import restaurants.RestaurantFactory;
+
 import java.util.ArrayList;
 
 /*
@@ -20,7 +25,7 @@ public class Database {
         barMenu.addItem("Food", new Item("Burger", 300.0));
 
         GeneralRestaurant bar = restaurantFactory.createRestaurant(GeneralRestaurant.Type.Bar, barMenu,
-                "Bar 108", "Sportivnaya", "5536");
+                "restaurants.Bar 108", "Sportivnaya", "5536");
         restaurants.add(bar);
 
         Menu cafeMenu = new Menu();
@@ -47,7 +52,7 @@ public class Database {
 
         if (filter != GeneralRestaurant.Type.General) {
             for (GeneralRestaurant restaurant : restaurants) {
-                if (restaurant.type == filter) {
+                if (restaurant.getType() == filter) {
                     list.add(restaurant);
                 }
             }
