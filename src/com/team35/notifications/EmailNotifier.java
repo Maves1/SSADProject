@@ -1,4 +1,4 @@
-package notifications;
+package com.team35.notifications;
 
 public class EmailNotifier extends NotificationDecorator{
     public String email;

@@ -1,4 +1,4 @@
-package restaurants;
+package com.team35.restaurants;
 
 public class Restaurant extends GeneralRestaurant {
     public Restaurant(String name, String address, String bankDetails, Menu menu) {

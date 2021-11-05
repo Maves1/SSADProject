@@ -1,7 +1,7 @@
-import restaurants.GeneralRestaurant;
-import restaurants.Item;
-import restaurants.Menu;
-import restaurants.RestaurantFactory;
+import com.team35.restaurants.GeneralRestaurant;
+import com.team35.restaurants.Item;
+import com.team35.restaurants.Menu;
+import com.team35.restaurants.RestaurantFactory;
 
 import java.util.ArrayList;
 

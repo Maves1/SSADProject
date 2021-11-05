@@ -1,4 +1,4 @@
-package restaurants;
+package com.team35.restaurants;
 
 import java.util.ArrayList;
 import java.util.HashMap;

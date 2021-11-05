@@ -1,8 +1,8 @@
-import notifications.NotificationDecorator;
-import notifications.Notifier;
-import restaurants.GeneralRestaurant;
-import restaurants.Item;
-import restaurants.Order;
+import com.team35.notifications.NotificationDecorator;
+import com.team35.notifications.Notifier;
+import com.team35.restaurants.GeneralRestaurant;
+import com.team35.restaurants.Item;
+import com.team35.restaurants.Order;
 
 import java.util.*;
 

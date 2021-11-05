@@ -1,4 +1,4 @@
-package restaurants;
+package com.team35.restaurants;
 
 public class Item {
     private String name;
