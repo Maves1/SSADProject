@@ -10,11 +10,10 @@ public class Order {
         Delivery,
         Finished
     }
-
+    private OrderState orderState;
     private Map<Item, Integer> items;
-    private Status orderStatus;
     private double check;
-
+    private Status orderStatus;
     public Order() {
         items = new HashMap<>();
         orderStatus = Status.PickingItems;
@@ -45,6 +44,15 @@ public class Order {
         }
     }
 
+    public void changeOrderState(){
+        orderState.changeOrderState();
+    }
+    public void cancelOrder(){
+        orderState.cancelOrder();
+    }
+    public void refundOrder(){
+        orderState.refundOrder();
+    }
     public Map<Item, Integer> getItems() {
         return items;
     }
