@@ -5,15 +5,19 @@ public class OrderCooking extends OrderState {
     OrderCooking(Order theOrder) {
         super(theOrder);
     }
+    OrderCooking(){
 
+    }
     void cancelOrder(){
         System.out.println("If you cancel now, you will get half of your order cost refunded");
     }
     void refundOrder() {
         //refund half amount
     }
-    void changeOrderState(OrderState orderState){
-        OrderState newState = orderState;
+    OrderState changeOrderState(){
+        System.out.println("Order is getting delivered to you now");
+        OrderState newState = new OrderDelivery();
+        return newState;
     }
 }
 

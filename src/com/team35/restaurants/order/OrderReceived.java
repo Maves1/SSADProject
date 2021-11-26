@@ -4,14 +4,18 @@ public class OrderReceived extends OrderState{
     OrderReceived(Order theOrder) {
         super(theOrder);
     }
+    OrderReceived(){
 
+    }
     void cancelOrder(){
         System.out.println("If you cancel now, you will get fully refunded");
     }
     void refundOrder(){
         ///refund full amount
     }
-    void changeOrderState(OrderState orderState){
-        OrderState newState = orderState;
+    OrderState changeOrderState(){
+        System.out.println("order started cooking\n");
+        OrderState newState = new OrderCooking();
+        return newState;
     }
 }

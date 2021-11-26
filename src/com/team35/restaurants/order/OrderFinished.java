@@ -4,14 +4,17 @@ public class OrderFinished extends OrderState {
     OrderFinished(Order theOrder) {
         super(theOrder);
     }
+    OrderFinished(){
 
+    }
     void cancelOrder(){
         System.out.println("This order is already finished");
     }
     void refundOrder() {
         //refund nothing
     }
-    void changeOrderState(OrderState orderState){
+    OrderState changeOrderState(){
         System.out.println("This order is finished");
+        return null;
     }
 }

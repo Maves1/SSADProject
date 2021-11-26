@@ -41,9 +41,8 @@ public abstract class GeneralRestaurant {
     public Type getType() { return type; }
 
     public boolean receiveOrder(Order order) {
-        order.changeState(new OrderCooking(order));
+        order.changeState();
         currentOrders.add(order);
-
         return true;
     }
 

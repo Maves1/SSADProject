@@ -12,13 +12,12 @@ public class Order {
     private double check;
     public Order() {
         items = new HashMap<>();
-    }
+        orderState = new OrderPickingItems();
 
+    }
     public double getCheck() {
         return check;
     }
-
-
 
     public void addItem(Item item, int quantity) {
             items.put(item, quantity);
@@ -29,8 +28,14 @@ public class Order {
             items.remove(item);
     }
 
-    public void changeState(OrderState orderState){
-        orderState.changeOrderState(orderState);
+    public void changeState(){
+        orderState = orderState.changeOrderState();
+    }
+    public void cancelOrder(){
+        orderState.cancelOrder();
+    }
+    public void refundOrder(){
+        orderState.cancelOrder();
     }
     public Map<Item, Integer> getItems() {
         return items;

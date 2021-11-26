@@ -4,6 +4,9 @@ public class OrderPickingItems extends OrderState{
     OrderPickingItems(Order theOrder) {
         super(theOrder);
     }
+    OrderPickingItems(){
+        super();
+    }
 
     void cancelOrder(){
         System.out.println("The order is canceled, have a nice day!");
@@ -11,8 +14,9 @@ public class OrderPickingItems extends OrderState{
     void refundOrder() {
         //refund nothing
     }
-    void changeOrderState(OrderState orderState){
-
+    OrderState changeOrderState(){
         System.out.println("The order has been sent to the restaurant");
+        OrderState newState = new OrderReceived();
+        return newState;
     }
 }

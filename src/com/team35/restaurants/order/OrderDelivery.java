@@ -4,15 +4,18 @@ public class OrderDelivery extends OrderState {
     OrderDelivery(Order theOrder) {
         super(theOrder);
     }
+    OrderDelivery(){
 
+    }
     void cancelOrder(){
         System.out.println("If you cancel now, you will not receive any refund");
     }
     void refundOrder() {
         //refund nothing
     }
-    void changeOrderState(OrderState orderState){
-        OrderState newState = orderState;
+    OrderState changeOrderState(){
+        OrderState newState = new OrderFinished();
         System.out.println("Your order has been successfully delivered");
+        return newState;
     }
 }
