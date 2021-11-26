@@ -35,7 +35,7 @@ public class Order {
         orderState.cancelOrder();
     }
     public void refundOrder(){
-        orderState.cancelOrder();
+        orderState.refundOrder();
     }
     public Map<Item, Integer> getItems() {
         return items;
