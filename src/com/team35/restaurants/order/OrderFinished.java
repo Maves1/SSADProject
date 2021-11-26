@@ -1,4 +1,4 @@
-package com.team35.restaurants;
+package com.team35.restaurants.order;
 // the state of the order should be changed to this after the order is delivered from the class application
 public class OrderFinished extends OrderState {
     OrderFinished(Order theOrder) {

@@ -2,7 +2,7 @@ import com.team35.notifications.NotificationDecorator;
 import com.team35.notifications.Notifier;
 import com.team35.restaurants.GeneralRestaurant;
 import com.team35.restaurants.Item;
-import com.team35.restaurants.Order;
+import com.team35.restaurants.order.Order;
 
 import java.util.*;
 

@@ -1,5 +1,7 @@
 package com.team35.restaurants;
 
+import com.team35.restaurants.order.Order;
+
 public class Bar extends GeneralRestaurant {
 
     public Bar(String name, String address, String bankDetails, Menu menu) {

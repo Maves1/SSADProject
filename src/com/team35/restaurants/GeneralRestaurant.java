@@ -1,5 +1,8 @@
 package com.team35.restaurants;
 
+import com.team35.restaurants.order.Order;
+import com.team35.restaurants.order.OrderCooking;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,17 +41,10 @@ public abstract class GeneralRestaurant {
     public Type getType() { return type; }
 
     public boolean receiveOrder(Order order) {
-        order.setOrderStatus(Order.Status.Cooking);
+        order.changeState(new OrderCooking(order));
         currentOrders.add(order);
 
         return true;
     }
 
-    public void changeOrderStatus(Order order, Order.Status newStatus) {
-        order.setOrderStatus(newStatus);
-    }
-
-    private void notifyOrderStatusChanged() {
-        // TODO: finish this
-    }
 }
