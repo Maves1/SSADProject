@@ -7,8 +7,8 @@ import java.util.Map;
 
 public class Order {
 
+    private final Map<Item, Integer> items;
     public OrderState orderState;
-    private Map<Item, Integer> items;
     private double check;
 
     public Order() {
@@ -29,7 +29,7 @@ public class Order {
         items.remove(item);
     }
 
-    public void changeState(OrderState orderState){
+    public void changeState(OrderState orderState) {
         orderState.changeOrderState(orderState);
     }
 

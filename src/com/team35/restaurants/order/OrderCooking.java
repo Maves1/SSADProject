@@ -6,19 +6,23 @@ public class OrderCooking extends OrderState {
         super(theOrder);
     }
 
-    void cancelOrder(){
+    void cancelOrder() {
         System.out.println("If you cancel now, you will get half of your order cost refunded");
     }
+
     void refundOrder() {
         //refund half amount
     }
-    void changeOrderState(OrderState orderState){
-        order.orderState=orderState;
+
+    void changeOrderState(OrderState orderState) {
+        order.orderState = orderState;
     }
+
     void refundOrder(double cost) {
         // Refund half of the cost
         System.out.println("Half of the order cost will be refunded: " + cost / 2);
     }
+
     @Override
     public void printState() {
         System.out.println("The order is being cooked right now ");
