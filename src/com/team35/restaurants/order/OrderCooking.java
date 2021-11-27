@@ -11,13 +11,13 @@ public class OrderCooking extends OrderState {
     void cancelOrder(){
         System.out.println("If you cancel now, you will get half of your order cost refunded");
     }
-    void refundOrder() {
-        //refund half amount
+    void refundOrder(double cost) {
+        // Refund half of the cost
+        System.out.println("Half of the order cost will be refunded: " + cost / 2);
     }
     OrderState changeOrderState(){
         System.out.println("Order is getting delivered to you now");
-        OrderState newState = new OrderDelivery();
-        return newState;
+        return new OrderDelivery();
     }
 }
 

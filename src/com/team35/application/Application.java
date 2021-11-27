@@ -1,3 +1,5 @@
+package com.team35.application;
+
 import com.team35.notifications.NotificationDecorator;
 import com.team35.notifications.Notifier;
 import com.team35.restaurants.GeneralRestaurant;
@@ -130,12 +132,12 @@ public class Application {
         System.out.println("Welcome to " + chosenRestaurant.getName());
         System.out.println("Write the category, item, and quantity.\n write finished when you are done");
         showMenu(chosenRestaurant.getMenu().getMenu());
-        Order newOrder = new Order();
+        final Order newOrder = new Order();
         String itemName = "start";
         String input = "start";
+        scanner.nextLine();
         while (true) {
-            scanner.nextLine();
-            input = scanner.nextLine();
+            input = scanner.nextLine().strip();
             if (input.equals("finished")) {
                 break;
             }
@@ -164,28 +166,63 @@ public class Application {
             String address = scanner.nextLine();
             System.out.println("Would you like to get the check via email? SMS? Telegram? (Y/N) (ex: YNY)");
             String notificationOptions = scanner.nextLine();
-            int mask=0;
-            for(int i=0;i<3;i++){
-                if(notificationOptions.charAt(i)== 'Y'){
-                    mask+= (1<<i);
+            int mask = 0;
+            for (int i = 0; i < 3; i++) {
+                if (notificationOptions.charAt(i) == 'Y') {
+                    mask += (1 << i);
                 }
             }
-            ///new stuff
-            System.out.println("Please enter your email, or a #(in case you don't want to use it) in the next line");
+            // New
+            System.out.println("Please enter your email, or a \"#\" (in case you don't want to use it) in the next line");
             String email = scanner.nextLine();
-            System.out.println("Please enter your phone number, or a #(in case you don't want to use it) in the next line");
+            System.out.println("Please enter your phone number, or a \"#\" (in case you don't want to use it) in the next line");
             String phone = scanner.nextLine();
-            System.out.println("Please enter your telegram alias, or a #(in case you don't want to use it) in the next line");
+            System.out.println("Please enter your telegram alias, or a \"#\" (in case you don't want to use it) in the next line");
             String telegramAlias = scanner.nextLine();
             Notifier notifier = new Notifier(email, phone, telegramAlias);
             NotificationDecorator multiplePlatformsNotifications = new NotificationDecorator(mask, notifier);
             multiplePlatformsNotifications.sendCheck();
-            ///still testing
+
+            // Testing
             System.out.println("restaurants.Order confirmed and will be delivered to " + address);
             System.out.println("Have a nice day!");
+
+            Thread orderStatusUpdateThread = new Thread() {
+                public void run() {
+                    long orderStatusSwitchBoundary = 8;
+                    long counter = 0;
+
+                    while (counter < orderStatusSwitchBoundary) {
+                        counter++;
+                        if (counter == orderStatusSwitchBoundary) {
+                            counter = 0;
+                            newOrder.changeState();
+                        }
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            };
+
+            orderStatusUpdateThread.start();
+
+            System.out.println("To cancel your order, type \"cancel\"");
+            input = scanner.next().strip();
+            if (input.equals("cancel")) {
+                orderStatusUpdateThread.stop();
+                newOrder.cancelOrder();
+                System.out.println("Are you sure? (Y/N)");
+                input = scanner.next();
+                if (input.toLowerCase(Locale.ROOT).equals("y")) {
+                    newOrder.refundOrder();
+                }
+            }
+
         } else {
-            newOrder = null;
-            System.out.println("The order was canceled, Have a nice day!");
+            newOrder.cancelOrder();
         }
 
     }

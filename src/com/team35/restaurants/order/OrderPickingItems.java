@@ -11,8 +11,8 @@ public class OrderPickingItems extends OrderState{
     void cancelOrder(){
         System.out.println("The order is canceled, have a nice day!");
     }
-    void refundOrder() {
-        //refund nothing
+    void refundOrder(double cost) {
+        // There is nothing to refund
     }
     OrderState changeOrderState(){
         System.out.println("The order has been sent to the restaurant");

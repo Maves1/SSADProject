@@ -10,7 +10,7 @@ public class OrderFinished extends OrderState {
     void cancelOrder(){
         System.out.println("This order is already finished");
     }
-    void refundOrder() {
+    void refundOrder(double cost) {
         //refund nothing
     }
     OrderState changeOrderState(){

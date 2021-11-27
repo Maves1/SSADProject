@@ -1,6 +1,7 @@
 package com.team35.restaurants;
 
 import com.team35.restaurants.order.Order;
+import com.team35.application.Application;
 
 public class Bar extends GeneralRestaurant {
 

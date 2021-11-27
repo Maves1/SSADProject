@@ -10,8 +10,9 @@ public class OrderDelivery extends OrderState {
     void cancelOrder(){
         System.out.println("If you cancel now, you will not receive any refund");
     }
-    void refundOrder() {
-        //refund nothing
+    void refundOrder(double cost) {
+        // Refund nothing
+        System.out.println("Nothing will be refunded");
     }
     OrderState changeOrderState(){
         OrderState newState = new OrderFinished();

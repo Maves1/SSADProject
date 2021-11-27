@@ -1,3 +1,5 @@
+package com.team35.application;
+
 import com.team35.restaurants.GeneralRestaurant;
 import com.team35.restaurants.Item;
 import com.team35.restaurants.Menu;
