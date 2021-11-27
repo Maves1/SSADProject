@@ -7,13 +7,13 @@ import java.util.Map;
 
 public class Order {
 
-    private OrderState orderState;
+    public OrderState orderState;
     private Map<Item, Integer> items;
     private double check;
 
     public Order() {
         items = new HashMap<>();
-        orderState = new OrderPickingItems();
+        orderState = new OrderPickingItems(this);
     }
 
     public double getCheck() {
@@ -29,8 +29,8 @@ public class Order {
         items.remove(item);
     }
 
-    public void changeState() {
-        orderState = orderState.changeOrderState();
+    public void changeState(OrderState orderState){
+        orderState.changeOrderState(orderState);
     }
 
     public void cancelOrder() {

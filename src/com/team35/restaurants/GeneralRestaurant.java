@@ -2,6 +2,7 @@ package com.team35.restaurants;
 
 import com.team35.restaurants.order.Order;
 import com.team35.restaurants.order.OrderCooking;
+import com.team35.restaurants.order.OrderReceived;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,7 @@ public abstract class GeneralRestaurant {
     public Type getType() { return type; }
 
     public boolean receiveOrder(Order order) {
-        order.changeState();
+        order.changeState(new OrderReceived(order));
         currentOrders.add(order);
         return true;
     }

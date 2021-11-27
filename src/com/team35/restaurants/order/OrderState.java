@@ -6,10 +6,8 @@ public abstract class OrderState {
     {
         this.order = theOrder;
     }
-    OrderState() {
-
-    }
-    abstract OrderState changeOrderState();
+    abstract void changeOrderState(OrderState orderState);
+    public abstract void printState();
     abstract void cancelOrder();
     abstract void refundOrder(double cost);
 }
