@@ -191,12 +191,21 @@ public class Application {
                 public void run() {
                     long orderStatusSwitchBoundary = 8;
                     long counter = 0;
+                    int currIndex = 0;
+                    List<OrderState> states = new ArrayList<>();
+                    states.add(new OrderCooking(newOrder));
+                    states.add(new OrderDelivery(newOrder));
+                    states.add(new OrderFinished(newOrder));
 
                     while (counter < orderStatusSwitchBoundary) {
                         counter++;
                         if (counter == orderStatusSwitchBoundary) {
+                            newOrder.changeState(states.get(currIndex));
                             counter = 0;
-                            newOrder.changeState();
+                            currIndex++;
+                        }
+                        if (currIndex > 2) {
+                            break;
                         }
                         try {
                             Thread.sleep(1000);
