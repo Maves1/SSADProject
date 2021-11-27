@@ -30,7 +30,7 @@ public class Order {
     }
 
     public void changeState(OrderState orderState) {
-        orderState.changeOrderState(orderState);
+        this.orderState.changeOrderState(orderState);
     }
 
     public void cancelOrder() {
